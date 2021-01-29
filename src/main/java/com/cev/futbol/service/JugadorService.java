@@ -1,19 +1,20 @@
 package com.cev.futbol.service;
 
-import com.cev.futbol.domain.Jugador;
-import com.cev.futbol.repository.JugadorRepository;
-import com.cev.futbol.repository.search.JugadorSearchRepository;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+
+import java.util.List;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import com.cev.futbol.domain.Jugador;
+import com.cev.futbol.repository.JugadorRepository;
+import com.cev.futbol.repository.search.JugadorSearchRepository;
 
 /**
  * Service Implementation for managing {@link Jugador}.
@@ -93,4 +94,16 @@ public class JugadorService {
     public Page<Jugador> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Jugadors for query {}", query);
         return jugadorSearchRepository.search(queryStringQuery(query), pageable);    }
+    
+    public List<Jugador> getJugadorByNombreAndEdad(String nombre, int edad) {
+    	return jugadorRepository.findByNombreAndEdad(nombre, edad);
+    }
+    
+    public List<Jugador> getJugadorByNombreOrEdad(String nombre, Optional<Integer> edad) {
+    	return jugadorRepository.findByNombreOrEdad(nombre, edad);
+    }
+    
+    public List<Jugador> getJugadorByEdadBetween(int edadUno, int edadDos){
+    	return jugadorRepository.findByEdadBetween(edadUno, edadDos);
+    }
 }

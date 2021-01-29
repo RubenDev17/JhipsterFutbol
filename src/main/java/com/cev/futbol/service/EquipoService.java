@@ -110,4 +110,17 @@ public class EquipoService {
     public Page<Equipo> search(String query, Pageable pageable) {
         log.debug("Request to search for a page of Equipos for query {}", query);
         return equipoSearchRepository.search(queryStringQuery(query), pageable);    }
+    
+    //Llamamos al repositorio para la consulta
+    public List<Equipo> getEquipoOrderByNombre(){
+    	return equipoRepository.findAllByOrderByNombre();
+    }
+    
+    public List<Equipo> getEquipoByNombre(String nombre){
+    	return equipoRepository.findByNombre(nombre);
+    }
+    
+    public List<Equipo> getEquipoByContaining(String nombre){
+    	return equipoRepository.findByNombreContaining(nombre);
+    }
 }
