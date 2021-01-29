@@ -1,22 +1,23 @@
 package com.cev.futbol.service;
 
-import com.cev.futbol.domain.Equipo;
-import com.cev.futbol.repository.EquipoRepository;
-import com.cev.futbol.repository.search.EquipoSearchRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.cev.futbol.domain.Equipo;
+import com.cev.futbol.repository.EquipoRepository;
+import com.cev.futbol.repository.search.EquipoSearchRepository;
 
 /**
  * Service Implementation for managing {@link Equipo}.
@@ -122,5 +123,17 @@ public class EquipoService {
     
     public List<Equipo> getEquipoByContaining(String nombre){
     	return equipoRepository.findByNombreContaining(nombre);
+    }
+    
+    public List<Equipo> getEquipoByLiga(String nombre){
+    	return equipoRepository.findByLiga_nombreEquals(nombre);
+    }
+    
+    public List<Equipo> getEquipoByFechaDeFundacion(Instant fecha){
+    	return equipoRepository.findByFechaDeFundacionGreaterThan(fecha);
+    }
+    
+    public List<Equipo> getEquipoByNombreOfLigaAndFechaDeFundacion(String nombre, Instant fecha){
+    	return equipoRepository.findByLiga_nombreAndFechaDeFundacionGreaterThan(nombre, fecha);
     }
 }

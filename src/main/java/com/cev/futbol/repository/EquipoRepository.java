@@ -1,5 +1,6 @@
 package com.cev.futbol.repository;
 
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +20,10 @@ public interface EquipoRepository extends JpaRepository<Equipo, Long> {
 	List<Equipo> findByNombre(String nombre);
 	//Recuperamos los alumnos cuyo nombre contenga "algo"
 	List<Equipo> findByNombreContaining(String nombre);
+	//Recuperamos los equipos que jueguen en una liga con nombre X
+	List<Equipo> findByLiga_nombreEquals(String nombre);
+	//Recuperamos equipos fundados despues de "X"
+	List<Equipo> findByFechaDeFundacionGreaterThan(Instant fecha);
+	//Recuperamos los equipos de una liga "x" fundados después de "x"
+	List<Equipo> findByLiga_nombreAndFechaDeFundacionGreaterThan(String nombre, Instant fecha);
 }

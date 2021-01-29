@@ -163,4 +163,9 @@ public class JugadorResource {
     public List<Jugador> getJugadorByEdadBetween(@PathVariable int edadUno, @PathVariable int edadDos){
     	return jugadorService.getJugadorByEdadBetween(edadUno, edadDos);
     }
+    
+    @GetMapping("/jugadoresEnUnPartido/{jornada}")
+    public List<Jugador> getJugadorByPartido(@PathVariable int jornada){
+    	return jugadorService.getJugadorByPartido(jornada);
+    }
 }

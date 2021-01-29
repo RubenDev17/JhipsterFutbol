@@ -106,4 +106,8 @@ public class JugadorService {
     public List<Jugador> getJugadorByEdadBetween(int edadUno, int edadDos){
     	return jugadorRepository.findByEdadBetween(edadUno, edadDos);
     }
+    
+    public List<Jugador> getJugadorByPartido(int jornada){
+    	return jugadorRepository.findByPartidos_jornadaEquals(jornada);
+    }
 }

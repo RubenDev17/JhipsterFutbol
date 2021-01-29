@@ -2,6 +2,7 @@ package com.cev.futbol.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -162,14 +163,28 @@ public class EquipoResource {
     	return equipoService.getEquipoOrderByNombre();
     }
     
-    @GetMapping("/equipoConNombre")
+    @GetMapping("/equiposConNombre")
     public List<Equipo> getEquipoByNombre(@RequestParam /*(required = false)*/ String nombre){
     	return equipoService.getEquipoByNombre(nombre);
     }
     
-    @GetMapping("/equipoConAlgoDelNombre/{nombre}")
+    @GetMapping("/equiposConAlgoDelNombre/{nombre}")
     public List<Equipo> getEquipoByContaining(@PathVariable String nombre){
     	return equipoService.getEquipoByContaining(nombre);
     }
  
+    @GetMapping("/equiposPorLiga/{nombre}")
+    public List<Equipo> getEquipoByLiga(@PathVariable String nombre){
+    	return equipoService.getEquipoByLiga(nombre);
+    }
+    
+    @GetMapping("/equiposFundadosPorFecha/{fecha}")
+    public List<Equipo> getEquipoByFechaDeFundacion(@PathVariable Instant fecha){
+    	return equipoService.getEquipoByFechaDeFundacion(fecha);
+    }
+    
+    @GetMapping("/equiposDeUnaLigaPorFechaDeFundacion/{nombre}&{fecha}")
+    public List<Equipo> getEquipoByNombreOfLigaAndFechaDeFundacion(@PathVariable String nombre, @PathVariable Instant fecha){
+    	return equipoService.getEquipoByNombreOfLigaAndFechaDeFundacion(nombre, fecha);
+    }
 }

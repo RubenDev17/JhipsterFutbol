@@ -20,4 +20,7 @@ public interface JugadorRepository extends JpaRepository<Jugador, Long> {
 	List<Jugador> findByNombreOrEdad(String nombre, Optional<Integer> edad);
 	//Buscar jugador con edad Entre
 	List<Jugador> findByEdadBetween(int edadUno, int edadDos);
+	
+	//Jugadores que hayan jugado en la jornada "X" de un partido
+	List<Jugador> findByPartidos_jornadaEquals(int jornada);
 }
