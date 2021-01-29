@@ -46,6 +46,14 @@
                         </small>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_temporada">Temporada</label>
+                    <select class="form-control" id="field_temporada" name="temporada" formControlName="temporada">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="temporadaOption.id === editForm.get('temporada')!.value?.id ? editForm.get('temporada')!.value : temporadaOption" *ngFor="let temporadaOption of temporadas; trackBy: trackById">{{ temporadaOption.anio }}</option>
+                    </select>
+                </div>
             </div>
 
             <div>

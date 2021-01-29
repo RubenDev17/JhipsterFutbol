@@ -1,5 +1,6 @@
 package com.cev.futbol.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -32,6 +33,10 @@ public class Liga implements Serializable {
     @Size(min = 4, max = 20)
     @Column(name = "nombre", length = 20)
     private String nombre;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "ligas", allowSetters = true)
+    private Temporada temporada;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -66,6 +71,19 @@ public class Liga implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Temporada getTemporada() {
+        return temporada;
+    }
+
+    public Liga temporada(Temporada temporada) {
+        this.temporada = temporada;
+        return this;
+    }
+
+    public void setTemporada(Temporada temporada) {
+        this.temporada = temporada;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

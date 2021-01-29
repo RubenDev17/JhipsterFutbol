@@ -16,6 +16,12 @@
                 <dd>
                     <span>{{ liga.nombre }}</span>
                 </dd>
+                <dt><span>Temporada</span></dt>
+                <dd>
+                    <div *ngIf="liga.temporada">
+                        <a [routerLink]="['/temporada', liga.temporada?.id, 'view']">{{ liga.temporada?.anio }}</a>
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"

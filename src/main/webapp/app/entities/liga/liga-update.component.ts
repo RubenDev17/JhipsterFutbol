@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 
 import { ILiga, Liga } from 'app/shared/model/liga.model';
 import { LigaService } from './liga.service';
+import { ITemporada } from 'app/shared/model/temporada.model';
+import { TemporadaService } from 'app/entities/temporada/temporada.service';
 
 @Component({
   selector: 'jhi-liga-update',
@@ -14,18 +16,27 @@ import { LigaService } from './liga.service';
 })
 export class LigaUpdateComponent implements OnInit {
   isSaving = false;
+  temporadas: ITemporada[] = [];
 
   editForm = this.fb.group({
     id: [],
     pais: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
     nombre: [null, [Validators.minLength(4), Validators.maxLength(20)]],
+    temporada: [],
   });
 
-  constructor(protected ligaService: LigaService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected ligaService: LigaService,
+    protected temporadaService: TemporadaService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ liga }) => {
       this.updateForm(liga);
+
+      this.temporadaService.query().subscribe((res: HttpResponse<ITemporada[]>) => (this.temporadas = res.body || []));
     });
   }
 
@@ -34,6 +45,7 @@ export class LigaUpdateComponent implements OnInit {
       id: liga.id,
       pais: liga.pais,
       nombre: liga.nombre,
+      temporada: liga.temporada,
     });
   }
 
@@ -57,6 +69,7 @@ export class LigaUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       pais: this.editForm.get(['pais'])!.value,
       nombre: this.editForm.get(['nombre'])!.value,
+      temporada: this.editForm.get(['temporada'])!.value,
     };
   }
 
@@ -74,5 +87,9 @@ export class LigaUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  trackById(index: number, item: ITemporada): any {
+    return item.id;
   }
 }

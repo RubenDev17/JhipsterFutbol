@@ -1,7 +1,14 @@
 {
   "fluentMethods": true,
   "clientRootFolder": "",
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipName": "liga",
+      "otherEntityName": "liga",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "temporada"
+    }
+  ],
   "fields": [
     {
       "fieldName": "anio",

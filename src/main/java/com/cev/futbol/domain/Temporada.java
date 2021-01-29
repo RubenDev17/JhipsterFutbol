@@ -8,6 +8,8 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A Temporada.
@@ -29,6 +31,10 @@ public class Temporada implements Serializable {
     @Column(name = "anio", length = 10, nullable = false, unique = true)
     private String anio;
 
+    @OneToMany(mappedBy = "temporada")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Liga> ligas = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -49,6 +55,31 @@ public class Temporada implements Serializable {
 
     public void setAnio(String anio) {
         this.anio = anio;
+    }
+
+    public Set<Liga> getLigas() {
+        return ligas;
+    }
+
+    public Temporada ligas(Set<Liga> ligas) {
+        this.ligas = ligas;
+        return this;
+    }
+
+    public Temporada addLiga(Liga liga) {
+        this.ligas.add(liga);
+        liga.setTemporada(this);
+        return this;
+    }
+
+    public Temporada removeLiga(Liga liga) {
+        this.ligas.remove(liga);
+        liga.setTemporada(null);
+        return this;
+    }
+
+    public void setLigas(Set<Liga> ligas) {
+        this.ligas = ligas;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

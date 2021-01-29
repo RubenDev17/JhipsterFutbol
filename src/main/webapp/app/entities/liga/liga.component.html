@@ -43,6 +43,7 @@
                     <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="pais"><span>Pais</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="nombre"><span>Nombre</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="temporada.anio"><span>Temporada</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -51,6 +52,11 @@
                     <td><a [routerLink]="['/liga', liga.id, 'view']">{{ liga.id }}</a></td>
                     <td>{{ liga.pais }}</td>
                     <td>{{ liga.nombre }}</td>
+                    <td>
+                        <div *ngIf="liga.temporada">
+                            <a [routerLink]="['/temporada', liga.temporada?.id, 'view']" >{{ liga.temporada?.anio }}</a>
+                        </div>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"

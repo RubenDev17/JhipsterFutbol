@@ -1,7 +1,15 @@
 {
   "fluentMethods": true,
   "clientRootFolder": "",
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipName": "temporada",
+      "otherEntityName": "temporada",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "anio",
+      "otherEntityRelationshipName": "liga"
+    }
+  ],
   "fields": [
     {
       "fieldName": "pais",
