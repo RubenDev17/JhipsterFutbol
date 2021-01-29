@@ -21,6 +21,12 @@
       "otherEntityName": "dato",
       "relationshipType": "one-to-many",
       "otherEntityRelationshipName": "equipo"
+    },
+    {
+      "relationshipName": "jugador",
+      "otherEntityName": "jugador",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "equipo"
     }
   ],
   "fields": [

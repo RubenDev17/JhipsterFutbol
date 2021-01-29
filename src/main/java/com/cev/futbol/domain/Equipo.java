@@ -52,6 +52,10 @@ public class Equipo implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Dato> datoes = new HashSet<>();
 
+    @OneToMany(mappedBy = "equipo")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Jugador> jugadors = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -149,6 +153,31 @@ public class Equipo implements Serializable {
 
     public void setDatoes(Set<Dato> datoes) {
         this.datoes = datoes;
+    }
+
+    public Set<Jugador> getJugadors() {
+        return jugadors;
+    }
+
+    public Equipo jugadors(Set<Jugador> jugadors) {
+        this.jugadors = jugadors;
+        return this;
+    }
+
+    public Equipo addJugador(Jugador jugador) {
+        this.jugadors.add(jugador);
+        jugador.setEquipo(this);
+        return this;
+    }
+
+    public Equipo removeJugador(Jugador jugador) {
+        this.jugadors.remove(jugador);
+        jugador.setEquipo(null);
+        return this;
+    }
+
+    public void setJugadors(Set<Jugador> jugadors) {
+        this.jugadors = jugadors;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

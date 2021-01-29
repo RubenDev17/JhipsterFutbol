@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 
 import { IJugador, Jugador } from 'app/shared/model/jugador.model';
 import { JugadorService } from './jugador.service';
+import { IEquipo } from 'app/shared/model/equipo.model';
+import { EquipoService } from 'app/entities/equipo/equipo.service';
 
 @Component({
   selector: 'jhi-jugador-update',
@@ -14,18 +16,27 @@ import { JugadorService } from './jugador.service';
 })
 export class JugadorUpdateComponent implements OnInit {
   isSaving = false;
+  equipos: IEquipo[] = [];
 
   editForm = this.fb.group({
     id: [],
     nombre: [null, [Validators.minLength(3), Validators.maxLength(20)]],
     edad: [],
+    equipo: [],
   });
 
-  constructor(protected jugadorService: JugadorService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected jugadorService: JugadorService,
+    protected equipoService: EquipoService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ jugador }) => {
       this.updateForm(jugador);
+
+      this.equipoService.query().subscribe((res: HttpResponse<IEquipo[]>) => (this.equipos = res.body || []));
     });
   }
 
@@ -34,6 +45,7 @@ export class JugadorUpdateComponent implements OnInit {
       id: jugador.id,
       nombre: jugador.nombre,
       edad: jugador.edad,
+      equipo: jugador.equipo,
     });
   }
 
@@ -57,6 +69,7 @@ export class JugadorUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       nombre: this.editForm.get(['nombre'])!.value,
       edad: this.editForm.get(['edad'])!.value,
+      equipo: this.editForm.get(['equipo'])!.value,
     };
   }
 
@@ -74,5 +87,9 @@ export class JugadorUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  trackById(index: number, item: IEquipo): any {
+    return item.id;
   }
 }
