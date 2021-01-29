@@ -9,6 +9,8 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A Liga.
@@ -37,6 +39,10 @@ public class Liga implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties(value = "ligas", allowSetters = true)
     private Temporada temporada;
+
+    @OneToMany(mappedBy = "liga")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Equipo> equipos = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -84,6 +90,31 @@ public class Liga implements Serializable {
 
     public void setTemporada(Temporada temporada) {
         this.temporada = temporada;
+    }
+
+    public Set<Equipo> getEquipos() {
+        return equipos;
+    }
+
+    public Liga equipos(Set<Equipo> equipos) {
+        this.equipos = equipos;
+        return this;
+    }
+
+    public Liga addEquipo(Equipo equipo) {
+        this.equipos.add(equipo);
+        equipo.setLiga(this);
+        return this;
+    }
+
+    public Liga removeEquipo(Equipo equipo) {
+        this.equipos.remove(equipo);
+        equipo.setLiga(null);
+        return this;
+    }
+
+    public void setEquipos(Set<Equipo> equipos) {
+        this.equipos = equipos;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

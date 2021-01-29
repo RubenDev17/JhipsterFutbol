@@ -1,7 +1,15 @@
 {
   "fluentMethods": true,
   "clientRootFolder": "",
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipName": "liga",
+      "otherEntityName": "liga",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "nombre",
+      "otherEntityRelationshipName": "equipo"
+    }
+  ],
   "fields": [
     {
       "fieldName": "nombre",

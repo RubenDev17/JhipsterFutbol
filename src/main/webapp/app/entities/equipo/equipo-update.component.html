@@ -43,6 +43,14 @@
                         <input id="field_fechaDeFundacion" type="datetime-local" class="form-control" name="fechaDeFundacion" formControlName="fechaDeFundacion" placeholder="YYYY-MM-DD HH:mm"/>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_liga">Liga</label>
+                    <select class="form-control" id="field_liga" name="liga" formControlName="liga">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="ligaOption.id === editForm.get('liga')!.value?.id ? editForm.get('liga')!.value : ligaOption" *ngFor="let ligaOption of ligas; trackBy: trackById">{{ ligaOption.nombre }}</option>
+                    </select>
+                </div>
             </div>
 
             <div>

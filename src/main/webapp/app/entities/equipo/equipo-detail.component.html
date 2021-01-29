@@ -20,6 +20,12 @@
                 <dd>
                     <span>{{ equipo.fechaDeFundacion }}</span>
                 </dd>
+                <dt><span>Liga</span></dt>
+                <dd>
+                    <div *ngIf="equipo.liga">
+                        <a [routerLink]="['/liga', equipo.liga?.id, 'view']">{{ equipo.liga?.nombre }}</a>
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"

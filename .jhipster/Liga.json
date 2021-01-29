@@ -8,6 +8,12 @@
       "relationshipType": "many-to-one",
       "otherEntityField": "anio",
       "otherEntityRelationshipName": "liga"
+    },
+    {
+      "relationshipName": "equipo",
+      "otherEntityName": "equipo",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "liga"
     }
   ],
   "fields": [

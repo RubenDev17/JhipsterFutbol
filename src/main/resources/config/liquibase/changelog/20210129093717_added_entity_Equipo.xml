@@ -25,6 +25,9 @@
             <column name="fecha_de_fundacion" type="datetime">
                 <constraints nullable="true" />
             </column>
+            <column name="liga_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
         <dropDefaultValue tableName="equipo" columnName="fecha_de_fundacion" columnDataType="datetime"/>

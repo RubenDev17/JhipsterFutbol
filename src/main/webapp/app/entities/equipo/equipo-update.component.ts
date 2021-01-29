@@ -9,6 +9,8 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { IEquipo, Equipo } from 'app/shared/model/equipo.model';
 import { EquipoService } from './equipo.service';
+import { ILiga } from 'app/shared/model/liga.model';
+import { LigaService } from 'app/entities/liga/liga.service';
 
 @Component({
   selector: 'jhi-equipo-update',
@@ -16,15 +18,22 @@ import { EquipoService } from './equipo.service';
 })
 export class EquipoUpdateComponent implements OnInit {
   isSaving = false;
+  ligas: ILiga[] = [];
 
   editForm = this.fb.group({
     id: [],
     nombre: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
     titulos: [],
     fechaDeFundacion: [],
+    liga: [],
   });
 
-  constructor(protected equipoService: EquipoService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected equipoService: EquipoService,
+    protected ligaService: LigaService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ equipo }) => {
@@ -34,6 +43,8 @@ export class EquipoUpdateComponent implements OnInit {
       }
 
       this.updateForm(equipo);
+
+      this.ligaService.query().subscribe((res: HttpResponse<ILiga[]>) => (this.ligas = res.body || []));
     });
   }
 
@@ -43,6 +54,7 @@ export class EquipoUpdateComponent implements OnInit {
       nombre: equipo.nombre,
       titulos: equipo.titulos,
       fechaDeFundacion: equipo.fechaDeFundacion ? equipo.fechaDeFundacion.format(DATE_TIME_FORMAT) : null,
+      liga: equipo.liga,
     });
   }
 
@@ -69,6 +81,7 @@ export class EquipoUpdateComponent implements OnInit {
       fechaDeFundacion: this.editForm.get(['fechaDeFundacion'])!.value
         ? moment(this.editForm.get(['fechaDeFundacion'])!.value, DATE_TIME_FORMAT)
         : undefined,
+      liga: this.editForm.get(['liga'])!.value,
     };
   }
 
@@ -86,5 +99,9 @@ export class EquipoUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  trackById(index: number, item: ILiga): any {
+    return item.id;
   }
 }
