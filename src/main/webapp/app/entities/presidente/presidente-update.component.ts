@@ -4,9 +4,12 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { IPresidente, Presidente } from 'app/shared/model/presidente.model';
 import { PresidenteService } from './presidente.service';
+import { IEquipo } from 'app/shared/model/equipo.model';
+import { EquipoService } from 'app/entities/equipo/equipo.service';
 
 @Component({
   selector: 'jhi-presidente-update',
@@ -14,18 +17,47 @@ import { PresidenteService } from './presidente.service';
 })
 export class PresidenteUpdateComponent implements OnInit {
   isSaving = false;
+  equipos: IEquipo[] = [];
 
   editForm = this.fb.group({
     id: [],
     nombre: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
     aniosEnPresidencia: [],
+    equipo: [],
   });
 
-  constructor(protected presidenteService: PresidenteService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected presidenteService: PresidenteService,
+    protected equipoService: EquipoService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ presidente }) => {
       this.updateForm(presidente);
+
+      this.equipoService
+        .query({ filter: 'presidente-is-null' })
+        .pipe(
+          map((res: HttpResponse<IEquipo[]>) => {
+            return res.body || [];
+          })
+        )
+        .subscribe((resBody: IEquipo[]) => {
+          if (!presidente.equipo || !presidente.equipo.id) {
+            this.equipos = resBody;
+          } else {
+            this.equipoService
+              .find(presidente.equipo.id)
+              .pipe(
+                map((subRes: HttpResponse<IEquipo>) => {
+                  return subRes.body ? [subRes.body].concat(resBody) : resBody;
+                })
+              )
+              .subscribe((concatRes: IEquipo[]) => (this.equipos = concatRes));
+          }
+        });
     });
   }
 
@@ -34,6 +66,7 @@ export class PresidenteUpdateComponent implements OnInit {
       id: presidente.id,
       nombre: presidente.nombre,
       aniosEnPresidencia: presidente.aniosEnPresidencia,
+      equipo: presidente.equipo,
     });
   }
 
@@ -57,6 +90,7 @@ export class PresidenteUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       nombre: this.editForm.get(['nombre'])!.value,
       aniosEnPresidencia: this.editForm.get(['aniosEnPresidencia'])!.value,
+      equipo: this.editForm.get(['equipo'])!.value,
     };
   }
 
@@ -74,5 +108,9 @@ export class PresidenteUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  trackById(index: number, item: IEquipo): any {
+    return item.id;
   }
 }

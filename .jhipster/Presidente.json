@@ -1,7 +1,17 @@
 {
   "fluentMethods": true,
   "clientRootFolder": "",
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipName": "equipo",
+      "otherEntityName": "equipo",
+      "relationshipType": "one-to-one",
+      "otherEntityField": "nombre",
+      "ownerSide": true,
+      "useJPADerivedIdentifier": false,
+      "otherEntityRelationshipName": "presidente"
+    }
+  ],
   "fields": [
     {
       "fieldName": "nombre",

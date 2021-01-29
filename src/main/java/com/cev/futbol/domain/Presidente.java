@@ -32,6 +32,10 @@ public class Presidente implements Serializable {
     @Column(name = "anios_en_presidencia")
     private Integer aniosEnPresidencia;
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Equipo equipo;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -65,6 +69,19 @@ public class Presidente implements Serializable {
 
     public void setAniosEnPresidencia(Integer aniosEnPresidencia) {
         this.aniosEnPresidencia = aniosEnPresidencia;
+    }
+
+    public Equipo getEquipo() {
+        return equipo;
+    }
+
+    public Presidente equipo(Equipo equipo) {
+        this.equipo = equipo;
+        return this;
+    }
+
+    public void setEquipo(Equipo equipo) {
+        this.equipo = equipo;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

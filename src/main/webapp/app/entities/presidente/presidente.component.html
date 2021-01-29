@@ -43,6 +43,7 @@
                     <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="nombre"><span>Nombre</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="aniosEnPresidencia"><span>Anios En Presidencia</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="equipo.nombre"><span>Equipo</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -51,6 +52,11 @@
                     <td><a [routerLink]="['/presidente', presidente.id, 'view']">{{ presidente.id }}</a></td>
                     <td>{{ presidente.nombre }}</td>
                     <td>{{ presidente.aniosEnPresidencia }}</td>
+                    <td>
+                        <div *ngIf="presidente.equipo">
+                            <a [routerLink]="['/equipo', presidente.equipo?.id, 'view']" >{{ presidente.equipo?.nombre }}</a>
+                        </div>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"

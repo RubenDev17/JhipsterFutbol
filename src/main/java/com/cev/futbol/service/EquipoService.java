@@ -11,7 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
@@ -58,6 +61,20 @@ public class EquipoService {
         return equipoRepository.findAll(pageable);
     }
 
+
+
+    /**
+     *  Get all the equipos where Presidente is {@code null}.
+     *  @return the list of entities.
+     */
+    @Transactional(readOnly = true) 
+    public List<Equipo> findAllWherePresidenteIsNull() {
+        log.debug("Request to get all equipos where Presidente is null");
+        return StreamSupport
+            .stream(equipoRepository.findAll().spliterator(), false)
+            .filter(equipo -> equipo.getPresidente() == null)
+            .collect(Collectors.toList());
+    }
 
     /**
      * Get one equipo by id.

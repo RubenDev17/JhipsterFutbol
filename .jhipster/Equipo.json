@@ -8,6 +8,13 @@
       "relationshipType": "many-to-one",
       "otherEntityField": "nombre",
       "otherEntityRelationshipName": "equipo"
+    },
+    {
+      "relationshipName": "presidente",
+      "otherEntityName": "presidente",
+      "relationshipType": "one-to-one",
+      "ownerSide": false,
+      "otherEntityRelationshipName": "equipo"
     }
   ],
   "fields": [
