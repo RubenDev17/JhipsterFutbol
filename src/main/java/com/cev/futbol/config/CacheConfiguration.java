@@ -48,6 +48,13 @@ public class CacheConfiguration {
             createCache(cm, com.cev.futbol.domain.User.class.getName());
             createCache(cm, com.cev.futbol.domain.Authority.class.getName());
             createCache(cm, com.cev.futbol.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.cev.futbol.domain.Temporada.class.getName());
+            createCache(cm, com.cev.futbol.domain.Liga.class.getName());
+            createCache(cm, com.cev.futbol.domain.Equipo.class.getName());
+            createCache(cm, com.cev.futbol.domain.Presidente.class.getName());
+            createCache(cm, com.cev.futbol.domain.Dato.class.getName());
+            createCache(cm, com.cev.futbol.domain.Jugador.class.getName());
+            createCache(cm, com.cev.futbol.domain.Partido.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -1,0 +1,46 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "jornada",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "rival",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMinlength": "2",
+      "fieldValidateRulesMaxlength": 20
+    },
+    {
+      "fieldName": "resultado",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMinlength": "1",
+      "fieldValidateRulesMaxlength": "10"
+    },
+    {
+      "fieldName": "numeroDeGoles",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "corner",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "faltas",
+      "fieldType": "Integer"
+    }
+  ],
+  "changelogDate": "20210129094420",
+  "dto": "no",
+  "searchEngine": "elasticsearch",
+  "service": "serviceClass",
+  "entityTableName": "dato",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
+}

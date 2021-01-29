@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="dato">
+            <h2><span>Dato</span> {{ dato.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Jornada</span></dt>
+                <dd>
+                    <span>{{ dato.jornada }}</span>
+                </dd>
+                <dt><span>Rival</span></dt>
+                <dd>
+                    <span>{{ dato.rival }}</span>
+                </dd>
+                <dt><span>Resultado</span></dt>
+                <dd>
+                    <span>{{ dato.resultado }}</span>
+                </dd>
+                <dt><span>Numero De Goles</span></dt>
+                <dd>
+                    <span>{{ dato.numeroDeGoles }}</span>
+                </dd>
+                <dt><span>Corner</span></dt>
+                <dd>
+                    <span>{{ dato.corner }}</span>
+                </dd>
+                <dt><span>Faltas</span></dt>
+                <dd>
+                    <span>{{ dato.faltas }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/dato', dato.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
