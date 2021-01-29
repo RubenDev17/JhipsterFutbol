@@ -32,6 +32,12 @@
                 <dd>
                     <span>{{ dato.faltas }}</span>
                 </dd>
+                <dt><span>Equipo</span></dt>
+                <dd>
+                    <div *ngIf="dato.equipo">
+                        <a [routerLink]="['/equipo', dato.equipo?.id, 'view']">{{ dato.equipo?.nombre }}</a>
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"

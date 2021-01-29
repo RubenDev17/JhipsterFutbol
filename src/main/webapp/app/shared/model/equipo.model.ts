@@ -1,6 +1,7 @@
 import { Moment } from 'moment';
 import { ILiga } from 'app/shared/model/liga.model';
 import { IPresidente } from 'app/shared/model/presidente.model';
+import { IDato } from 'app/shared/model/dato.model';
 
 export interface IEquipo {
   id?: number;
@@ -9,6 +10,7 @@ export interface IEquipo {
   fechaDeFundacion?: Moment;
   liga?: ILiga;
   presidente?: IPresidente;
+  datoes?: IDato[];
 }
 
 export class Equipo implements IEquipo {
@@ -18,6 +20,7 @@ export class Equipo implements IEquipo {
     public titulos?: number,
     public fechaDeFundacion?: Moment,
     public liga?: ILiga,
-    public presidente?: IPresidente
+    public presidente?: IPresidente,
+    public datoes?: IDato[]
   ) {}
 }

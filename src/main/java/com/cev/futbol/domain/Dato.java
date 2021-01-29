@@ -1,5 +1,6 @@
 package com.cev.futbol.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -44,6 +45,10 @@ public class Dato implements Serializable {
 
     @Column(name = "faltas")
     private Integer faltas;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "datoes", allowSetters = true)
+    private Equipo equipo;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -130,6 +135,19 @@ public class Dato implements Serializable {
 
     public void setFaltas(Integer faltas) {
         this.faltas = faltas;
+    }
+
+    public Equipo getEquipo() {
+        return equipo;
+    }
+
+    public Dato equipo(Equipo equipo) {
+        this.equipo = equipo;
+        return this;
+    }
+
+    public void setEquipo(Equipo equipo) {
+        this.equipo = equipo;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

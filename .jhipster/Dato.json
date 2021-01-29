@@ -1,7 +1,15 @@
 {
   "fluentMethods": true,
   "clientRootFolder": "",
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipName": "equipo",
+      "otherEntityName": "equipo",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "nombre",
+      "otherEntityRelationshipName": "dato"
+    }
+  ],
   "fields": [
     {
       "fieldName": "jornada",

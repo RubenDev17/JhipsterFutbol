@@ -1,3 +1,5 @@
+import { IEquipo } from 'app/shared/model/equipo.model';
+
 export interface IDato {
   id?: number;
   jornada?: number;
@@ -6,6 +8,7 @@ export interface IDato {
   numeroDeGoles?: number;
   corner?: number;
   faltas?: number;
+  equipo?: IEquipo;
 }
 
 export class Dato implements IDato {
@@ -16,6 +19,7 @@ export class Dato implements IDato {
     public resultado?: string,
     public numeroDeGoles?: number,
     public corner?: number,
-    public faltas?: number
+    public faltas?: number,
+    public equipo?: IEquipo
   ) {}
 }

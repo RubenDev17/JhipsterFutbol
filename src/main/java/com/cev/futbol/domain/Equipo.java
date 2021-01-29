@@ -11,6 +11,8 @@ import javax.validation.constraints.*;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A Equipo.
@@ -45,6 +47,10 @@ public class Equipo implements Serializable {
     @OneToOne(mappedBy = "equipo")
     @JsonIgnore
     private Presidente presidente;
+
+    @OneToMany(mappedBy = "equipo")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Dato> datoes = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -118,6 +124,31 @@ public class Equipo implements Serializable {
 
     public void setPresidente(Presidente presidente) {
         this.presidente = presidente;
+    }
+
+    public Set<Dato> getDatoes() {
+        return datoes;
+    }
+
+    public Equipo datoes(Set<Dato> datoes) {
+        this.datoes = datoes;
+        return this;
+    }
+
+    public Equipo addDato(Dato dato) {
+        this.datoes.add(dato);
+        dato.setEquipo(this);
+        return this;
+    }
+
+    public Equipo removeDato(Dato dato) {
+        this.datoes.remove(dato);
+        dato.setEquipo(null);
+        return this;
+    }
+
+    public void setDatoes(Set<Dato> datoes) {
+        this.datoes = datoes;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

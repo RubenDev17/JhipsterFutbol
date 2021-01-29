@@ -47,6 +47,7 @@
                     <th scope="col"  jhiSortBy="numeroDeGoles"><span>Numero De Goles</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="corner"><span>Corner</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="faltas"><span>Faltas</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="equipo.nombre"><span>Equipo</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -59,6 +60,11 @@
                     <td>{{ dato.numeroDeGoles }}</td>
                     <td>{{ dato.corner }}</td>
                     <td>{{ dato.faltas }}</td>
+                    <td>
+                        <div *ngIf="dato.equipo">
+                            <a [routerLink]="['/equipo', dato.equipo?.id, 'view']" >{{ dato.equipo?.nombre }}</a>
+                        </div>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"

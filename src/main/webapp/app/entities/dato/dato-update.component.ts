@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 
 import { IDato, Dato } from 'app/shared/model/dato.model';
 import { DatoService } from './dato.service';
+import { IEquipo } from 'app/shared/model/equipo.model';
+import { EquipoService } from 'app/entities/equipo/equipo.service';
 
 @Component({
   selector: 'jhi-dato-update',
@@ -14,6 +16,7 @@ import { DatoService } from './dato.service';
 })
 export class DatoUpdateComponent implements OnInit {
   isSaving = false;
+  equipos: IEquipo[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -23,13 +26,21 @@ export class DatoUpdateComponent implements OnInit {
     numeroDeGoles: [],
     corner: [],
     faltas: [],
+    equipo: [],
   });
 
-  constructor(protected datoService: DatoService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected datoService: DatoService,
+    protected equipoService: EquipoService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ dato }) => {
       this.updateForm(dato);
+
+      this.equipoService.query().subscribe((res: HttpResponse<IEquipo[]>) => (this.equipos = res.body || []));
     });
   }
 
@@ -42,6 +53,7 @@ export class DatoUpdateComponent implements OnInit {
       numeroDeGoles: dato.numeroDeGoles,
       corner: dato.corner,
       faltas: dato.faltas,
+      equipo: dato.equipo,
     });
   }
 
@@ -69,6 +81,7 @@ export class DatoUpdateComponent implements OnInit {
       numeroDeGoles: this.editForm.get(['numeroDeGoles'])!.value,
       corner: this.editForm.get(['corner'])!.value,
       faltas: this.editForm.get(['faltas'])!.value,
+      equipo: this.editForm.get(['equipo'])!.value,
     };
   }
 
@@ -86,5 +99,9 @@ export class DatoUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  trackById(index: number, item: IEquipo): any {
+    return item.id;
   }
 }

@@ -15,6 +15,12 @@
       "relationshipType": "one-to-one",
       "ownerSide": false,
       "otherEntityRelationshipName": "equipo"
+    },
+    {
+      "relationshipName": "dato",
+      "otherEntityName": "dato",
+      "relationshipType": "one-to-many",
+      "otherEntityRelationshipName": "equipo"
     }
   ],
   "fields": [
