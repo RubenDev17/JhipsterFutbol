@@ -91,12 +91,18 @@ public class PartidoResource {
      * {@code GET  /partidos} : get all the partidos.
      *
      * @param pageable the pagination information.
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of partidos in body.
      */
     @GetMapping("/partidos")
-    public ResponseEntity<List<Partido>> getAllPartidos(Pageable pageable) {
+    public ResponseEntity<List<Partido>> getAllPartidos(Pageable pageable, @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get a page of Partidos");
-        Page<Partido> page = partidoService.findAll(pageable);
+        Page<Partido> page;
+        if (eagerload) {
+            page = partidoService.findAllWithEagerRelationships(pageable);
+        } else {
+            page = partidoService.findAll(pageable);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

@@ -59,6 +59,8 @@ public class CacheConfiguration {
             createCache(cm, com.cev.futbol.domain.Liga.class.getName() + ".equipos");
             createCache(cm, com.cev.futbol.domain.Equipo.class.getName() + ".datoes");
             createCache(cm, com.cev.futbol.domain.Equipo.class.getName() + ".jugadors");
+            createCache(cm, com.cev.futbol.domain.Partido.class.getName() + ".jugadors");
+            createCache(cm, com.cev.futbol.domain.Jugador.class.getName() + ".partidos");
             // jhipster-needle-ehcache-add-entry
         };
     }

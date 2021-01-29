@@ -1,5 +1,6 @@
 package com.cev.futbol.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -9,6 +10,8 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A Jugador.
@@ -35,6 +38,11 @@ public class Jugador implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties(value = "jugadors", allowSetters = true)
     private Equipo equipo;
+
+    @ManyToMany(mappedBy = "jugadors")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnore
+    private Set<Partido> partidos = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -82,6 +90,31 @@ public class Jugador implements Serializable {
 
     public void setEquipo(Equipo equipo) {
         this.equipo = equipo;
+    }
+
+    public Set<Partido> getPartidos() {
+        return partidos;
+    }
+
+    public Jugador partidos(Set<Partido> partidos) {
+        this.partidos = partidos;
+        return this;
+    }
+
+    public Jugador addPartido(Partido partido) {
+        this.partidos.add(partido);
+        partido.getJugadors().add(this);
+        return this;
+    }
+
+    public Jugador removePartido(Partido partido) {
+        this.partidos.remove(partido);
+        partido.getJugadors().remove(this);
+        return this;
+    }
+
+    public void setPartidos(Set<Partido> partidos) {
+        this.partidos = partidos;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

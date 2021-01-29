@@ -20,6 +20,12 @@
                 <dd>
                     <span>{{ partido.rival }}</span>
                 </dd>
+                <dt><span>Jugador</span></dt>
+                <dd>
+                    <span *ngFor="let jugador of partido.jugadors; let last = last">
+                        <a [routerLink]="['/jugador', jugador?.id, 'view']">{{ jugador.nombre }}</a>{{ last ? '' : ', ' }}
+                    </span>
+                </dd>
             </dl>
 
             <button type="submit"

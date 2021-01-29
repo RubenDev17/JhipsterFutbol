@@ -8,6 +8,13 @@
       "relationshipType": "many-to-one",
       "otherEntityField": "nombre",
       "otherEntityRelationshipName": "jugador"
+    },
+    {
+      "relationshipName": "partido",
+      "otherEntityName": "partido",
+      "relationshipType": "many-to-many",
+      "ownerSide": false,
+      "otherEntityRelationshipName": "jugador"
     }
   ],
   "fields": [

@@ -60,6 +60,15 @@ public class PartidoService {
 
 
     /**
+     * Get all the partidos with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<Partido> findAllWithEagerRelationships(Pageable pageable) {
+        return partidoRepository.findAllWithEagerRelationships(pageable);
+    }
+
+    /**
      * Get one partido by id.
      *
      * @param id the id of the entity.
@@ -68,7 +77,7 @@ public class PartidoService {
     @Transactional(readOnly = true)
     public Optional<Partido> findOne(Long id) {
         log.debug("Request to get Partido : {}", id);
-        return partidoRepository.findById(id);
+        return partidoRepository.findOneWithEagerRelationships(id);
     }
 
     /**

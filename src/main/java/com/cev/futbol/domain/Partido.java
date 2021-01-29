@@ -9,6 +9,8 @@ import javax.validation.constraints.*;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A Partido.
@@ -34,6 +36,13 @@ public class Partido implements Serializable {
     @Size(min = 3, max = 20)
     @Column(name = "rival", length = 20)
     private String rival;
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JoinTable(name = "partido_jugador",
+               joinColumns = @JoinColumn(name = "partido_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "jugador_id", referencedColumnName = "id"))
+    private Set<Jugador> jugadors = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -81,6 +90,31 @@ public class Partido implements Serializable {
 
     public void setRival(String rival) {
         this.rival = rival;
+    }
+
+    public Set<Jugador> getJugadors() {
+        return jugadors;
+    }
+
+    public Partido jugadors(Set<Jugador> jugadors) {
+        this.jugadors = jugadors;
+        return this;
+    }
+
+    public Partido addJugador(Jugador jugador) {
+        this.jugadors.add(jugador);
+        jugador.getPartidos().add(this);
+        return this;
+    }
+
+    public Partido removeJugador(Jugador jugador) {
+        this.jugadors.remove(jugador);
+        jugador.getPartidos().remove(this);
+        return this;
+    }
+
+    public void setJugadors(Set<Jugador> jugadors) {
+        this.jugadors = jugadors;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

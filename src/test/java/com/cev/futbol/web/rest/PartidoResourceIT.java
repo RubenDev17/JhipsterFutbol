@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -53,6 +54,12 @@ public class PartidoResourceIT {
 
     @Autowired
     private PartidoRepository partidoRepository;
+
+    @Mock
+    private PartidoRepository partidoRepositoryMock;
+
+    @Mock
+    private PartidoService partidoServiceMock;
 
     @Autowired
     private PartidoService partidoService;
@@ -166,6 +173,26 @@ public class PartidoResourceIT {
             .andExpect(jsonPath("$.[*].rival").value(hasItem(DEFAULT_RIVAL)));
     }
     
+    @SuppressWarnings({"unchecked"})
+    public void getAllPartidosWithEagerRelationshipsIsEnabled() throws Exception {
+        when(partidoServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restPartidoMockMvc.perform(get("/api/partidos?eagerload=true"))
+            .andExpect(status().isOk());
+
+        verify(partidoServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public void getAllPartidosWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(partidoServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restPartidoMockMvc.perform(get("/api/partidos?eagerload=true"))
+            .andExpect(status().isOk());
+
+        verify(partidoServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
     @Test
     @Transactional
     public void getPartido() throws Exception {

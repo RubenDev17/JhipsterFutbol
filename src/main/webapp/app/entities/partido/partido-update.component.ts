@@ -9,6 +9,8 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { IPartido, Partido } from 'app/shared/model/partido.model';
 import { PartidoService } from './partido.service';
+import { IJugador } from 'app/shared/model/jugador.model';
+import { JugadorService } from 'app/entities/jugador/jugador.service';
 
 @Component({
   selector: 'jhi-partido-update',
@@ -16,15 +18,22 @@ import { PartidoService } from './partido.service';
 })
 export class PartidoUpdateComponent implements OnInit {
   isSaving = false;
+  jugadors: IJugador[] = [];
 
   editForm = this.fb.group({
     id: [],
     jornada: [],
     fecha: [],
     rival: [null, [Validators.minLength(3), Validators.maxLength(20)]],
+    jugadors: [],
   });
 
-  constructor(protected partidoService: PartidoService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected partidoService: PartidoService,
+    protected jugadorService: JugadorService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ partido }) => {
@@ -34,6 +43,8 @@ export class PartidoUpdateComponent implements OnInit {
       }
 
       this.updateForm(partido);
+
+      this.jugadorService.query().subscribe((res: HttpResponse<IJugador[]>) => (this.jugadors = res.body || []));
     });
   }
 
@@ -43,6 +54,7 @@ export class PartidoUpdateComponent implements OnInit {
       jornada: partido.jornada,
       fecha: partido.fecha ? partido.fecha.format(DATE_TIME_FORMAT) : null,
       rival: partido.rival,
+      jugadors: partido.jugadors,
     });
   }
 
@@ -67,6 +79,7 @@ export class PartidoUpdateComponent implements OnInit {
       jornada: this.editForm.get(['jornada'])!.value,
       fecha: this.editForm.get(['fecha'])!.value ? moment(this.editForm.get(['fecha'])!.value, DATE_TIME_FORMAT) : undefined,
       rival: this.editForm.get(['rival'])!.value,
+      jugadors: this.editForm.get(['jugadors'])!.value,
     };
   }
 
@@ -84,5 +97,20 @@ export class PartidoUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  trackById(index: number, item: IJugador): any {
+    return item.id;
+  }
+
+  getSelected(selectedVals: IJugador[], option: IJugador): IJugador {
+    if (selectedVals) {
+      for (let i = 0; i < selectedVals.length; i++) {
+        if (option.id === selectedVals[i].id) {
+          return selectedVals[i];
+        }
+      }
+    }
+    return option;
   }
 }

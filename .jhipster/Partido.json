@@ -1,7 +1,16 @@
 {
   "fluentMethods": true,
   "clientRootFolder": "",
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipName": "jugador",
+      "otherEntityName": "jugador",
+      "relationshipType": "many-to-many",
+      "otherEntityField": "nombre",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "partido"
+    }
+  ],
   "fields": [
     {
       "fieldName": "jornada",

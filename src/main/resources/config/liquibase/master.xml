@@ -27,6 +27,7 @@
     <include file="config/liquibase/changelog/20210129094039_added_entity_constraints_Presidente.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210129094420_added_entity_constraints_Dato.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210129095107_added_entity_constraints_Jugador.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210129095305_added_entity_constraints_Partido.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>
